@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&family=Roboto:wght@300;400;500;700&display=swap');
+
+*,*::before,*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+}
+/*App*/
+.app{
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: .255fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0;
+    grid-template-areas: 'header content';
+    background-color: #E3E0CF;
+    overflow: hidden;
+}
+/*Header component*/
+.header{
+    grid-area: header;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #E5E2E2;
+}
+
+.content{
+    grid-area: content;
+    background-color: inherit;
+}
+
