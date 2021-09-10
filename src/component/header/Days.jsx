@@ -2,25 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "./days.module.css";
 import {NavLink} from "react-router-dom";
+import DayConvector from "../function/day";
 
-const Days = props => {
-
-    const day = (next = 0) => {
-        let date = new Date();
-        let day = date.getDay() + next;
-
-        const daysArr = {
-            0 : 'Sun.',
-            1 : 'Mon.',
-            2 : 'Tue.',
-            3 : 'Wen.',
-            4 : 'Thu.',
-            5 : 'Fri.',
-            6 : 'Sat.',
-        }
-
-        return day !== 7 ? daysArr[day] : daysArr[0]
-    }
+const Days = () => {
 
     return(
         <div className={styles.days}>
@@ -33,7 +17,7 @@ const Days = props => {
                         className={styles.days__text}
                         activeClassName={styles.days__text__active}
                     >
-                        {day()}
+                        {DayConvector('short')}
                     </NavLink>
                 </li>
                 <li className={styles.days__inner}>
@@ -43,7 +27,7 @@ const Days = props => {
                         className={styles.days__text}
                         activeClassName={styles.days__text__active}
                     >
-                        {day(1)}
+                        {DayConvector('short',1)}
                     </NavLink>
                 </li>
                 {/*Week*/}
