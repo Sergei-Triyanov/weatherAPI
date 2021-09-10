@@ -2,10 +2,12 @@ import React, {useState, useEffect,} from "react";
 import {Route, Switch} from "react-router-dom";
 //component
 import Header from "./component/header/Header";
-import TodayPage from "./component/content/TodayPage";
+import TodayPage from "./component/content/DayPage";
 //styles
 import  './App.css'
 import {array} from "prop-types";
+import Active from "./component/Active";
+import Loading from "./component/Loading";
 
 
 
@@ -28,7 +30,7 @@ function App() {
         }});
     const [errors, setErrors] = useState('');
     const [temperature, setTemperature]  = useState({
-        'temp' : 'Loading...'
+        'temp' : ''
     });
     const [formatTemp, setFormatTemp] = useState('F')
 
@@ -70,6 +72,7 @@ function App() {
                                 'wind' : result.list[0].wind.speed,
                                 'humidity': result.list[0].main.humidity,
                                 'temp' : temperatureCovert(result),
+                                'pressure' : result.list[0].main.pressure
                             },
                             'local' : {
                                 'lat' : result.city.coord.lat,
@@ -79,23 +82,11 @@ function App() {
                         setTemperature({
                             'temp' :  Math.floor(result.list[0].main.temp)
                         })
-                        setErrors('')
+                        if(errors !== ''){
+                            setErrors('')
+                        }
                     } else{
                         setErrors( result.message )
-                        setWeatherDate({
-                            'weather' : {
-                                "city" : city,
-                                'list' : null,
-                                'time' : null,
-                                'temp' : null,
-                                'feels_like' : null,
-                                'clouds' : null,
-                                'wind': null,
-                            },
-                            'local' : {
-                                'lat' : 55.7522,
-                                'lon' : 37.6156
-                            }})
                     }
                 })
         }
@@ -120,6 +111,22 @@ function App() {
         }
     },[formatTemp,weatherDate])
 
+
+    const loadingContentChecked = () =>{
+        if(Array.isArray(temperature.temp)){
+            return <Active
+                weather={weatherDate.weather}
+                error={errors}
+                city={city}
+                temp={temperature.temp}
+                wind={weatherDate.weather.wind}
+                humidity = {weatherDate.weather.humidity}
+                pressure = {weatherDate.weather.pressure}
+            />
+        }
+        return <Loading/>
+    }
+
     return (
         <div className={'app'}>
             <Header
@@ -127,18 +134,7 @@ function App() {
                 handleCity={handleCity}
                 handleFormatTemp={handleFormatTemp}
             />
-            <Switch>
-                {/*Today*/}
-                <Route path={'/today'} render={() => {
-                   return <TodayPage
-                       weather={weatherDate.weather}
-                       error={errors}
-                       city={city}
-                       temp={temperature.temp}
-                   />
-                }}/>
-                {/*/Today*/}
-            </Switch>
+            {loadingContentChecked()}
         </div>
     );
 }
