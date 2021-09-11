@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import styles from './header.module.css'
-import Search from "./Search";
 import Days from "./Days";
 import TemperatureSwitcher from "./TemperatureSwitcher";
+import SearchComponent from "./SearchComponent";
 
 const Header = props => {
 
@@ -25,7 +25,7 @@ const Header = props => {
 
                     {/*search*/}
                     <li className={styles.nav__inner}>
-                        <Search
+                        <SearchComponent
                             handleWeatherDate={props.handleWeatherDate}
                             handleCity={props.handleCity}
                         />
